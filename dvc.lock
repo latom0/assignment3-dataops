@@ -1,0 +1,131 @@
+schema: '2.0'
+stages:
+  ingest_bronze:
+    cmd: python src/ingest_bronze.py
+    deps:
+    - path: data/incoming
+      hash: md5
+      md5: 4c20cc8dcf7e5d98e54c1b6429fe4c02.dir
+      size: 78298
+      nfiles: 5
+    - path: params.yaml
+      hash: md5
+      md5: 4062901863ba2de9d948722f1296f230
+      size: 320
+    - path: src/ingest_bronze.py
+      hash: md5
+      md5: 38572de1069de23c964589caddcb2d44
+      size: 3548
+    - path: src/utils.py
+      hash: md5
+      md5: 154cd5f7a12945f213005d8d87806c43
+      size: 1995
+    outs:
+    - path: data/bronze/bronze.parquet
+      hash: md5
+      md5: f8fef15ab7a2307bad73ea0e2234b6d8
+      size: 38294
+    - path: data/bronze/lineage.json
+      hash: md5
+      md5: 75140e603343fbb2a4f867d668726d77
+      size: 1193
+  validate_bronze:
+    cmd: python src/validate.py --layer bronze
+    deps:
+    - path: data/bronze/bronze.parquet
+      hash: md5
+      md5: f8fef15ab7a2307bad73ea0e2234b6d8
+      size: 38294
+    - path: data/bronze/lineage.json
+      hash: md5
+      md5: 7e6be79fb5134b0c62f86c6d5a57322d
+      size: 1223
+    - path: params.yaml
+      hash: md5
+      md5: 4062901863ba2de9d948722f1296f230
+      size: 320
+    - path: src/utils.py
+      hash: md5
+      md5: 154cd5f7a12945f213005d8d87806c43
+      size: 1995
+    - path: src/validate.py
+      hash: md5
+      md5: 33ec9e2d332bc7401208c75ed4097aac
+      size: 5298
+    outs:
+    - path: evidence/logs/validate_bronze.json
+      hash: md5
+      md5: c259f51a24913613ab253ecc5c0af396
+      size: 2003
+  build_silver:
+    cmd: python src/transform_silver.py
+    deps:
+    - path: data/bronze/bronze.parquet
+      hash: md5
+      md5: f8fef15ab7a2307bad73ea0e2234b6d8
+      size: 38294
+    - path: params.yaml
+      hash: md5
+      md5: 4062901863ba2de9d948722f1296f230
+      size: 320
+    - path: src/transform_silver.py
+      hash: md5
+      md5: 91da1089ce8a88ad40ab56fc9a025131
+      size: 2961
+    - path: src/utils.py
+      hash: md5
+      md5: 154cd5f7a12945f213005d8d87806c43
+      size: 1995
+    outs:
+    - path: data/silver/silver.parquet
+      hash: md5
+      md5: d169c964630050f3a31ca3cfbc8e7b70
+      size: 76407
+  validate_silver:
+    cmd: python src/validate.py --layer silver
+    deps:
+    - path: data/silver/silver.parquet
+      hash: md5
+      md5: d169c964630050f3a31ca3cfbc8e7b70
+      size: 76407
+    - path: params.yaml
+      hash: md5
+      md5: 4062901863ba2de9d948722f1296f230
+      size: 320
+    - path: src/utils.py
+      hash: md5
+      md5: 154cd5f7a12945f213005d8d87806c43
+      size: 1995
+    - path: src/validate.py
+      hash: md5
+      md5: 33ec9e2d332bc7401208c75ed4097aac
+      size: 5298
+    outs:
+    - path: evidence/logs/validate_silver.json
+      hash: md5
+      md5: f480b0c3bea097fa831e370216bd6261
+      size: 380
+  build_gold:
+    cmd: python src/build_gold.py
+    deps:
+    - path: data/silver/silver.parquet
+      hash: md5
+      md5: d169c964630050f3a31ca3cfbc8e7b70
+      size: 76407
+    - path: params.yaml
+      hash: md5
+      md5: 4062901863ba2de9d948722f1296f230
+      size: 320
+    - path: src/build_gold.py
+      hash: md5
+      md5: 37ab42b326926249564668f2b778c917
+      size: 1386
+    - path: src/utils.py
+      hash: md5
+      md5: 154cd5f7a12945f213005d8d87806c43
+      size: 1995
+    outs:
+    - path: data/gold/gold.parquet
+      hash: md5
+      md5: ee511932566ac664b2f6cc68bc027eaf
+      size: 81687

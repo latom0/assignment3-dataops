@@ -1,0 +1,52 @@
+stages:
+  ingest_bronze:
+    cmd: python src/ingest_bronze.py
+    deps:
+      - src/ingest_bronze.py
+      - src/utils.py
+      - data/incoming
+      - params.yaml
+    outs:
+      - data/bronze/bronze.parquet
+      - data/bronze/lineage.json
+
+  validate_bronze:
+    cmd: python src/validate.py --layer bronze
+    deps:
+      - src/validate.py
+      - src/utils.py
+      - data/bronze/bronze.parquet
+      - data/bronze/lineage.json
+      - params.yaml
+    outs:
+      - evidence/logs/validate_bronze.json
+
+  build_silver:
+    cmd: python src/transform_silver.py
+    deps:
+      - src/transform_silver.py
+      - src/utils.py
+      - data/bronze/bronze.parquet
+      - params.yaml
+    outs:
+      - data/silver/silver.parquet
+
+  validate_silver:
+    cmd: python src/validate.py --layer silver
+    deps:
+      - src/validate.py
+      - src/utils.py
+      - data/silver/silver.parquet
+      - params.yaml
+    outs:
+      - evidence/logs/validate_silver.json
+
+  build_gold:
+    cmd: python src/build_gold.py
+    deps:
+      - src/build_gold.py
+      - src/utils.py
+      - data/silver/silver.parquet
+      - params.yaml
+    outs:
+      - data/gold/gold.parquet

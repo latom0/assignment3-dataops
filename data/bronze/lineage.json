@@ -1,0 +1,40 @@
+{
+  "ingested_batches": [
+    {
+      "batch_name": "batch_01.csv",
+      "file_sha256": "cef4168d8775f8db3af0869e1ed83dd554cb3b31b8809f9887826b424b3512d1",
+      "rows_read": 293,
+      "date_min": "2013-01-01",
+      "date_max": "2013-10-19"
+    },
+    {
+      "batch_name": "batch_02.csv",
+      "file_sha256": "9cbba6783949072a502e73f8fd3e944847dce440a045272e635b9b3a2675fe6f",
+      "rows_read": 293,
+      "date_min": "2013-10-20",
+      "date_max": "2014-08-07"
+    },
+    {
+      "batch_name": "batch_03.csv",
+      "file_sha256": "e3ae513bad5f61fbdab476177c302c9196900972259efdb0ef7228e2500b2160",
+      "rows_read": 294,
+      "date_min": "2014-08-08",
+      "date_max": "2015-05-27"
+    },
+    {
+      "batch_name": "batch_04.csv",
+      "file_sha256": "687f2f76fb5fc0c0877611bc57bb2c2076fa026b1e722923fbc95a21edb6cf30",
+      "rows_read": 293,
+      "date_min": "2015-05-28",
+      "date_max": "2016-03-14"
+    },
+    {
+      "batch_name": "batch_05.csv",
+      "file_sha256": "43e9c6bd256b8d98bb13dd5db0070ed6e53594d5009e5c444c94e6523fc016fe",
+      "rows_read": 294,
+      "date_min": "2016-03-15",
+      "date_max": "2017-01-01"
+    }
+  ],
+  "bronze_rows_total": 1467
+}

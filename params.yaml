@@ -1,0 +1,20 @@
+data:
+  date_col: "date"
+
+ranges:
+  meantemp: [-10, 60]
+  humidity: [0, 100]
+  wind_speed: [0, 100]
+  meanpressure: [800, 1200]
+
+silver:
+  rolling_window_days: 7
+  lags: [1, 7]
+
+gold:
+  target_horizon_days: 1
+  keep_features:
+    - "meantemp"
+    - "humidity"
+    - "wind_speed"
+    - "meanpressure"
